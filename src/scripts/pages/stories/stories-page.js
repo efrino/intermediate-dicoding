@@ -56,7 +56,7 @@ export default class StoriesPage {
         if (container) {
             container.innerHTML = `
         <div class="empty-state">
-            <img src="../../../public/images/404.svg" alt="No stories" class="empty-icon" />
+            <img src="src/public/images/404.svg" alt="No stories" class="empty-icon" />
             <p>No stories found</p>
             ${window.AuthHelper?.isUserLoggedIn?.()
                     ? '<a href="#/add-story" class="btn">Share Your Story</a>'
