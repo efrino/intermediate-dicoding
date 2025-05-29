@@ -1,0 +1,2 @@
+APP_URL=<localhost>
+MAP_SERVICE_API_KEY=Open Source -> Leaflet

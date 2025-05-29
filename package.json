@@ -1,0 +1,22 @@
+{
+  "name": "intermediate-dicoding",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "description": "",
+  "main": "vite.config.js",
+  "keywords": [],
+  "author": "Efrino Wahyu Eko Pambudi",
+  "license": "ISC"
+}

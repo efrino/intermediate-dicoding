@@ -1,0 +1,107 @@
+.login-page .app-bar,
+.login-page footer,
+.register-page .app-bar,
+.register-page footer {
+    display: none;
+}
+
+.login-page main,
+.register-page main {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+    .app-bar__brand h1 {
+        font-size: 2rem;
+    }
+
+    #hamburger-button {
+        display: none;
+    }
+
+    .app-bar__navigation {
+        position: static;
+        width: auto;
+        background-color: transparent;
+    }
+
+    .app-bar__navigation ul {
+        display: flex;
+        gap: 10px;
+    }
+
+    .app-bar__navigation ul li {
+        margin-bottom: 0;
+    }
+
+    .stories-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .stories-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .story-card__image {
+        height: 250px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    main {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .add-story {
+        padding: 15px;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .story-card {
+        margin-bottom: 20px;
+    }
+
+    .story-detail {
+        padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .story-detail__image {
+            max-height: 50vh;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .story-detail__image {
+            max-height: 40vh;
+        }
+    }
+
+    .story-map {
+        height: 300px;
+    }
+}
