@@ -1,16 +1,15 @@
-import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-    root: resolve(__dirname, 'src'),
-    publicDir: resolve(__dirname, 'public'),
-    build: {
-        outDir: resolve(__dirname, 'dist'),
-        emptyOutDir: true,
+  publicDir: resolve(__dirname, 'public'),
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
     },
-    resolve: {
-        alias: {
-            '@': resolve(__dirname, 'src'),
-        },
-    },
+  },
 });
