@@ -1,2 +1,2 @@
-APP_URL=<localhost>
+APP_URL=<localhost> atau https://intermediate-dicoding.vercel.app/
 MAP_SERVICE_API_KEY=Open Source -> Leaflet
