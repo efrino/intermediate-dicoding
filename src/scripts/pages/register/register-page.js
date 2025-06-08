@@ -1,10 +1,12 @@
 import {
+    NotificationHelper
+} from '../../utils/notification-helper.js';
+import {
     RegisterModel
 } from './register-model.js';
 import {
     RegisterPresenter
 } from './register-presenter.js';
-
 
 export default class RegisterPage {
     render() {

@@ -31,7 +31,7 @@ class App {
     const page = routes[url];
 
     if (!page) {
-      this.#content.innerHTML = '<p>404 Page Not Found</p>';
+      this.#content.innerHTML = '../../../public/offline.html';
       return;
     }
     this._removeFabButton();

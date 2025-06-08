@@ -71,12 +71,21 @@ export default class LoginPage {
         button.textContent = 'Logging in...';
     }
 
+    hideLoading() {
+        const button = document.getElementById('loginButton');
+        button.disabled = false;
+        button.textContent = 'Login';
+    }
+
     renderLoginSuccess(user) {
         NotificationHelper.showToast(`Welcome Back, ${user.name}`);
+        // aktifkan kembali tombol (opsional kalau mau)
+        this.hideLoading();
         window.location.hash = '/home';
     }
 
     renderLoginError(errorMessage = "Login failed. Please check your credentials.") {
         NotificationHelper.showToast(errorMessage, true);
+        this.hideLoading();  // aktifkan kembali tombol setelah error
     }
 }

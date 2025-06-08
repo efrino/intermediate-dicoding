@@ -2,22 +2,30 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <title>Dicoding Story</title>
+
+  <!-- Preload font dengan atribut as dan crossorigin -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-    as="style" />
+    as="style" crossorigin="anonymous" />
+
+  <!-- Load font stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"
+    crossorigin="anonymous" />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#4CAF50" />
 </head>
+
 
 <body>
   <app-bar></app-bar>
   <main tabindex="-1" id="main-content" class="main-content"></main>
 </body>
 <script type="module" src="/src/scripts/index.js"></script>
-
 </html>

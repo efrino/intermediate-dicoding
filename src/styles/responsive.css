@@ -15,28 +15,43 @@
     justify-content: center;
 }
 
-@media screen and (min-width: 768px) {
-    .app-bar__brand h1 {
-        font-size: 2rem;
-    }
-
-    #hamburger-button {
-        display: none;
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
     }
 
     .app-bar__navigation {
-        position: static;
-        width: auto;
-        background-color: transparent;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100%;
+        background-color: var(--primary-color);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 2rem;
+        gap: 1rem;
+        transition: right 0.3s ease-in-out;
+    }
+
+    .app-bar__navigation.open {
+        right: 0;
     }
 
     .app-bar__navigation ul {
-        display: flex;
-        gap: 10px;
+        flex-direction: column;
+        width: 100%;
     }
 
-    .app-bar__navigation ul li {
-        margin-bottom: 0;
+    .nav-link {
+        width: 100%;
+        padding: 0.5rem 0;
+    }
+
+    .close-menu-btn {
+        display: block;
     }
 
     .stories-container {

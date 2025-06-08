@@ -1,3 +1,6 @@
+// stories-model.js
+import Idb from '../../utils/idb';
+
 export default class StoriesModel {
     constructor(api) {
         this.api = api;
@@ -6,10 +9,15 @@ export default class StoriesModel {
     async fetchStories() {
         try {
             const response = await this.api.getAllStories();
-            return response || [];
+            const stories = response || [];
+
+            // Simpan ke IndexedDB
+            await Idb.putStories(stories);
+
+            return stories;
         } catch (error) {
-            console.error("Failed to fetch stories:", error);
-            return [];
+            console.error("Gagal ambil dari API, fallback ke IndexedDB:", error);
+            return await Idb.getAllStories();
         }
     }
 }

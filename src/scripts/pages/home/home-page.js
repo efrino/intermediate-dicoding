@@ -87,28 +87,32 @@ export default class HomePage {
     const date = story.createdAt ? showFormattedDate(story.createdAt) : 'Unknown date';
 
     return `
-      <article class="story-card">
-        <div class="story-card__image-container">
-          <img src="${story.photoUrl}" alt="${story.description}" class="story-card__image">
-        </div>
-        <div class="story-card__content">
-          <h3 class="story-card__title">${story.name}</h3>
-          <p class="story-card__description">${story.description}</p>
-          <div class="story-card__meta">
-            <time class="story-card__date">${date}</time>
-            ${story.lat && story.lon
+    <article class="story-card">
+      <div class="story-card__image-container">
+        <img src="${story.photoUrl}" 
+             alt="${story.description}" 
+             class="story-card__image"
+             onerror="this.onerror=null;this.src='/images/404.svg'; this.alt='Image not found';">
+      </div>
+      <div class="story-card__content">
+        <h3 class="story-card__title">${story.name}</h3>
+        <p class="story-card__description">${story.description}</p>
+        <div class="story-card__meta">
+          <time class="story-card__date">${date}</time>
+          ${story.lat && story.lon
         ? `<div class="story-card__location" data-lat="${story.lat}" data-lon="${story.lon}">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Location</span>
-                  </div>`
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Location</span>
+                </div>`
         : ''
       }
-          </div>
-          <a href="#/stories/${story.id}" class="btn btn--small">Read More</a>
         </div>
-      </article>
-    `;
+        <a href="#/stories/${story.id}" class="btn btn--small">Read More</a>
+      </div>
+    </article>
+  `;
   }
+
 
   _attachLocationClickListeners() {
     const locations = document.querySelectorAll(".story-card__location");

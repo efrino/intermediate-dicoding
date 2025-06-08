@@ -1,12 +1,12 @@
-import StoriesModel from "./stories-model.js";
-import StoriesPresenter from "./stories-presenter.js";
 import * as api from "../../data/api.js";
-import {
-    MapHelper
-} from '../../utils/MapHelper';
 import {
     isUserLoggedIn
 } from '../../utils';
+import {
+    MapHelper
+} from '../../utils/MapHelper';
+import StoriesModel from "./stories-model.js";
+import StoriesPresenter from "./stories-presenter.js";
 
 
 export default class StoriesPage {
@@ -172,7 +172,7 @@ export default class StoriesPage {
                 alt="${story.description}"
                 class="story-card__image"
                 style="view-transition-name: story-image-${story.id}"
-                onerror="this.src='./images/default-story.jpg'"
+                onerror="this.src='/images/404.svg'; this.alt='Image not found';"
                 loading="lazy">
             </div>
             <div class="story-card__content">

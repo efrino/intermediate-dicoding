@@ -1,13 +1,20 @@
-import {
-    getAllStories
-} from '../../data/api';
+// home-model.js
+import Idb from '../../utils/idb';
+import { getAllStories } from '../../data/api';
 
 export class HomeModel {
     async fetchStories(page = 1, limit = 3) {
         try {
-            return await getAllStories(page, limit);
+            const response = await getAllStories();
+            const stories = response || [];
+
+            // Simpan ke IndexedDB
+            await Idb.putStories(stories);
+
+            return stories;
         } catch (error) {
-            throw new Error('Failed to fetch stories');
+            console.error("Gagal ambil dari API, fallback ke IndexedDB:", error);
+            return await Idb.getAllStories();
         }
     }
 }

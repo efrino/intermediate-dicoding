@@ -1,0 +1,86 @@
+<!-- /offline.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-top: 20px;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    .offline-page {
+        /* Center content vertically & horizontally */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        height: 100vh;
+        /* full viewport height */
+        padding: 1rem;
+        box-sizing: border-box;
+        text-align: center;
+        background-color: #fff;
+        /* atau warna lain sesuai tema */
+    }
+
+    .offline-image {
+        max-width: 100vw;
+        /* maksimal selebar viewport */
+        max-height: 50vh;
+        /* maksimal setengah viewport tinggi */
+        width: auto;
+        /* width otomatis sesuai aspek rasio */
+        height: auto;
+        /* height otomatis sesuai aspek rasio */
+        object-fit: contain;
+        /* agar gambar tidak terpotong */
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+        /* opsional, biar rapi */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .offline-page h1 {
+        font-size: 2rem;
+        margin: 0 0 0.5rem;
+        color: #333;
+    }
+
+    .offline-page p {
+        font-size: 1.2rem;
+        margin: 0;
+        color: #666;
+    }
+</style>
+
+<body>
+    <div class="offline-page">
+        <img src="/images/page-404.jpg" alt="Offline" class="offline-image" />
+        <h1>Oops, you're offline!</h1>
+        <p>Please check your internet connection and try again.</p>
+    </div>
+</body>
+
+</html>
