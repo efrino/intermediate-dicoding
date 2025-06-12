@@ -1,8 +1,12 @@
 import CONFIG from '../config';
-import { getUserData } from '../utils';
+import {
+  getUserData
+} from '../utils';
 
 const ENDPOINTS = {
   REGISTER: `${CONFIG.BASE_URL}/register`,
+  SUBSCRIBE: `${CONFIG.BASE_URL}/notifications/subscribe`,
+  UNSUBSCRIBE: `${CONFIG.BASE_URL}/notifications/subscribe`,
   LOGIN: `${CONFIG.BASE_URL}/login`,
   STORIES: `${CONFIG.BASE_URL}/stories`,
   DETAILS: (id) => `${CONFIG.BASE_URL}/stories/${id}`,
@@ -14,7 +18,11 @@ export async function registerUser(name, email, password) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name, email, password }),
+    body: JSON.stringify({
+      name,
+      email,
+      password
+    }),
   });
 
   const responseData = await response.json();
@@ -29,7 +37,9 @@ export async function registerUser(name, email, password) {
 
 export async function addStory(formData) {
   try {
-    const { token } = getUserData();
+    const {
+      token
+    } = getUserData();
 
     const response = await fetch(ENDPOINTS.STORIES, {
       method: 'POST',
@@ -42,9 +52,36 @@ export async function addStory(formData) {
     return await response.json();
   } catch (error) {
     console.error('Error adding story:', error);
-    return { error: true, message: error.message };
+    return {
+      error: true,
+      message: error.message
+    };
   }
 }
+
+export async function addStoryGuest(formData) {
+  try {
+    const response = await fetch(`${CONFIG.BASE_URL}/stories/guest`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to add guest story');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error adding story as guest:', error);
+    return {
+      error: true,
+      message: error.message,
+    };
+  }
+}
+
 
 export async function loginUser(email, password) {
   const response = await fetch(ENDPOINTS.LOGIN, {
@@ -52,7 +89,10 @@ export async function loginUser(email, password) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({
+      email,
+      password
+    }),
   });
 
   return await response.json();
@@ -60,7 +100,9 @@ export async function loginUser(email, password) {
 
 export async function getAllStories(page = 1, size = 10, withLocation = false) {
   try {
-    const { token } = getUserData();
+    const {
+      token
+    } = getUserData();
 
     if (!token) {
       throw new Error('No access token found. Please login first.');
@@ -72,9 +114,12 @@ export async function getAllStories(page = 1, size = 10, withLocation = false) {
 
     const url = `${ENDPOINTS.STORIES}?page=${page}&size=${size}&location=${withLocation ? 1 : 0}`;
 
-    const response = await fetch(url, { headers });
+    const response = await fetch(url, {
+      headers
+    });
 
     const text = await response.text();
+    console.log('Raw response text:', text);
 
     let responseJson;
     try {
@@ -97,7 +142,9 @@ export async function getAllStories(page = 1, size = 10, withLocation = false) {
 
 export async function getStoryById(id) {
   try {
-    const { token } = getUserData();
+    const {
+      token
+    } = getUserData();
 
     if (!token) {
       throw new Error("401: Authentication token is required");
@@ -127,16 +174,65 @@ export async function getStoryById(id) {
     throw error;
   }
 }
-export async function addStoryGuest(formData) {
-  try {
-    const response = await fetch(`${CONFIG.BASE_URL}/stories/guest`, {
-      method: 'POST',
-      body: formData,
-    });
 
-    return await response.json();
-  } catch (error) {
-    console.error('Error adding guest story:', error);
-    return { error: true, message: error.message };
+export async function subscribePushNotification({
+  endpoint,
+  keys: {
+    p256dh,
+    auth
   }
+}) {
+  const {
+    token
+  } = getUserData();
+
+  const data = JSON.stringify({
+    endpoint,
+    keys: {
+      p256dh,
+      auth
+    },
+  });
+
+  const fetchResponse = await fetch(ENDPOINTS.SUBSCRIBE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: data,
+  });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
+}
+
+export async function unsubscribePushNotification({
+  endpoint
+}) {
+  const {
+    token
+  } = getUserData();
+
+  const data = JSON.stringify({
+    endpoint
+  });
+
+  const fetchResponse = await fetch(ENDPOINTS.UNSUBSCRIBE, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: data,
+  });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
 }

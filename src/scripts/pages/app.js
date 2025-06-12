@@ -3,9 +3,16 @@ import {
   getActiveRoute
 } from '../routes/url-parser';
 import {
-  isUserLoggedIn
+  isUserLoggedIn,
+  isServiceWorkerAvailable,
+
 } from '../utils/index';
 
+import {
+  isCurrentPushSubscriptionAvailable,
+  subscribe,
+  unsubscribe
+} from '../utils/notification-helper';
 
 class App {
   #content = null;
@@ -14,6 +21,30 @@ class App {
     content
   }) {
     this.#content = content;
+  }
+
+  async #setupPushNotification() {
+    const isSubscribed = await isCurrentPushSubscriptionAvailable();
+    const subscribeBtn = document.getElementById('subscribe-button');
+
+    if (!subscribeBtn) return;
+
+    if (isSubscribed) {
+      subscribeBtn.innerHTML = `<i class="fas fa-bell-slash icon-white"></i> Unsubscribe`;
+      subscribeBtn.onclick = () => {
+        unsubscribe().finally(() => {
+          this.#setupPushNotification();
+        });
+      };
+      return;
+    }
+
+    subscribeBtn.innerHTML = `<i class="fas fa-bell icon-white"></i> Subscribe`;
+    subscribeBtn.onclick = () => {
+      subscribe().finally(() => {
+        this.#setupPushNotification();
+      });
+    };
   }
 
   async renderPage() {
@@ -35,12 +66,16 @@ class App {
       return;
     }
     this._removeFabButton();
-    
+
     if (!document.startViewTransition) {
       this.#content.innerHTML = await page.render();
       await page.afterRender();
 
       return;
+    }
+
+    if (isServiceWorkerAvailable()) {
+      this.#setupPushNotification();
     }
 
     document.startViewTransition(async () => {
@@ -49,12 +84,12 @@ class App {
     });
 
     this._bindSkipLink();
-    document.querySelector('app-bar') ?.update ?.();
+    document.querySelector('app-bar')?.update?.();
   }
 
   _removeFabButton() {
     const fab = document.querySelector(".fab-add-story");
-      if (fab) fab.remove();
+    if (fab) fab.remove();
   }
 
   _stopActiveMediaStreams() {
@@ -70,10 +105,10 @@ class App {
   }
 
   _bindSkipLink() {
-  const skipLink = document.querySelector('.skip-link');
-  const mainContent = document.getElementById('main-content');
+    const skipLink = document.querySelector('.skip-link');
+    const mainContent = document.getElementById('main-content');
 
-  if (skipLink && mainContent) {
+    if (skipLink && mainContent) {
       skipLink.addEventListener('click', (event) => {
         event.preventDefault();
         mainContent.setAttribute('tabindex', '-1');
@@ -84,7 +119,7 @@ class App {
       });
     }
   }
-  
+
 }
 
 

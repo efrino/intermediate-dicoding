@@ -1,8 +1,14 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite';
+import {
+  defineConfig
+} from 'vite';
+import {
+  VitePWA
+} from 'vite-plugin-pwa';
+import {
+  resolve
+} from 'path';
 
 export default defineConfig({
-  publicDir: resolve(__dirname, 'public'),
   build: {
     outDir: 'dist',
     emptyOutDir: true,
@@ -12,4 +18,17 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
+  plugins: [
+    VitePWA({
+      registerType: 'autoUpdate',
+      injectRegister: null,
+      strategies: 'injectManifest',
+      srcDir: 'src/scripts', 
+      filename: 'sw.js', 
+      manifest: false,
+      devOptions: {
+        enabled: false, 
+      }
+    }),
+  ],
 });

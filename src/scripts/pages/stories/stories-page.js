@@ -1,6 +1,6 @@
 import StoriesModel from "./stories-model.js";
 import StoriesPresenter from "./stories-presenter.js";
-import * as api from "../../data/api.js";
+import Database from '../../data/database.js';
 import {
     MapHelper
 } from '../../utils/MapHelper';
@@ -11,8 +11,9 @@ import {
 
 export default class StoriesPage {
     constructor() {
-        this.model = new StoriesModel(api);
-        this.presenter = new StoriesPresenter(this.model, this);
+        const apiModel = new StoriesModel();
+        const dbModel = Database;
+        this.presenter = new StoriesPresenter(apiModel, dbModel, this);
     }
 
     async render() {
@@ -37,6 +38,23 @@ export default class StoriesPage {
             if (loadMoreBtn) loadMoreBtn.style.display = "none";
         }
     }
+    bindSaveStoryButton(handler) {
+        document.querySelectorAll('.btn-save-story').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const storyId = e.target.closest('.story-card').dataset.id;
+                handler(storyId, btn);
+            });
+        });
+    }
+
+    saveToBookmarkSuccessfully(message) {
+        alert(message);
+    }
+
+    saveToBookmarkFailed(error) {
+        alert('Failed to save story: ' + error);
+    }
+
     showLoading() {
         const container =
             document.getElementById("stories-list") ||
@@ -134,11 +152,9 @@ export default class StoriesPage {
     }
 
     bindAddStoryButton(handler) {
-        console.log("Menjalankan bindAddStoryButton...");
         console.log("window.location.hash:", window.location.hash);
 
         if (document.querySelector(".fab-add-story")) {
-            console.log("FAB sudah ada, tidak akan ditambahkan lagi.");
             return;
         }
 
@@ -172,7 +188,7 @@ export default class StoriesPage {
                 alt="${story.description}"
                 class="story-card__image"
                 style="view-transition-name: story-image-${story.id}"
-                onerror="this.src='./images/default-story.jpg'"
+                onerror="this.src='./images/404.svg'; this.alt='Image not found';"
                 loading="lazy">
             </div>
             <div class="story-card__content">
@@ -205,6 +221,13 @@ export default class StoriesPage {
                 : ""
             }
             </div>
+              <button 
+                class="btn btn--small btn-save-story"
+                data-id="${story.id}"
+                ${story.isSaved ? 'disabled' : ''}
+            >
+                ${story.isSaved ? 'Tersimpan' : 'Save Story'}
+            </button>
             <a href="#/stories/${story.id}" class="btn btn--small">Read More</a>
             </div>
         </article>

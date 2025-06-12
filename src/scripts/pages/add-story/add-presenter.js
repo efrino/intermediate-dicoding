@@ -1,3 +1,4 @@
+import { NotificationHelper } from '../../utils/notification-helper.js';
 import AddModel from './add-model';
 
 export default class AddPresenter {
@@ -26,6 +27,9 @@ export default class AddPresenter {
     if (result.error) {
       console.error('Error submitting story:', result.message);
       throw new Error(result.message || 'Failed to add story');
+    } else {
+      NotificationHelper.showToast('Story added successfully');
+      window.location.hash = '/stories';
     }
 
     return result;

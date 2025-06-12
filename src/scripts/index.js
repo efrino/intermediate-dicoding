@@ -4,6 +4,8 @@ import '../styles/responsive.css';
 import App from './pages/app';
 import '../scripts/component/AppBar';
 
+import { registerServiceWorker } from './utils';
+
 document.addEventListener('DOMContentLoaded', async () => {
   if (!window.location.hash || window.location.hash === '#/') {
     window.location.hash = '#/home';
@@ -12,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     content: document.querySelector('#main-content'),
   });
   await app.renderPage();
+  await registerServiceWorker();
 
   window.addEventListener('hashchange', async () => {
     await app.renderPage();
@@ -22,8 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (skipLink && mainContent) {
     skipLink.addEventListener('click', (event) => {
-      event.preventDefault(); 
-      mainContent.setAttribute('tabindex', '-1'); 
+      event.preventDefault();
+      mainContent.setAttribute('tabindex', '-1');
       mainContent.focus();
 
       setTimeout(() => {

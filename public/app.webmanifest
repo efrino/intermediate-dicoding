@@ -1,0 +1,30 @@
+{
+    "name": "Share Your Dicoding Story",
+    "short_name": "Story",
+    "start_url": "/#/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#FFFFFF",
+    "theme_color": "#d97706",
+    "description": "Aplikasi untuk share story",
+    "icons": [{
+            "src": "/images/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "screenshots": [{
+            "src": "/images/screenshots/Screenshot-1.png",
+            "sizes": "1920x1043",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "/images/screenshots/Screenshot-2.png",
+            "sizes": "1920x1043",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ]
+}

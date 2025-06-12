@@ -1,10 +1,12 @@
 import {
+    NotificationHelper
+} from '../../utils/notification-helper.js';
+import {
     RegisterModel
 } from './register-model.js';
 import {
     RegisterPresenter
 } from './register-presenter.js';
-
 
 export default class RegisterPage {
     render() {
@@ -91,7 +93,7 @@ export default class RegisterPage {
             const agreed = document.getElementById('terms')?.checked;
 
             if (!agreed) {
-                alert('You must agree to the terms.');
+                showToast('You must agree to the terms.');
                 return;
             }
 
